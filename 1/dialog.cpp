@@ -565,8 +565,10 @@ bool Dialog::findTimer()
     QTime curTime = QTime::currentTime();
 
     if (useTime <= curTime)
+    {
+        usetimer = false;
         return false;
-
+    }
         long int timeMS = -1;
 
         int i_result_hour = useTime.hour() - curTime.hour();
