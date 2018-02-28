@@ -50,17 +50,22 @@ void Dialog::createMenu()
     m_save->setShortcut(tr("Ctrl+S"));
     m_save->setIcon(QIcon(":/icon/m_icon_save.png"));
 
+    QAction *m_help = new QAction(tr("Help"), this);
+    m_help->setShortcut(tr("Ctrl+H"));
+    m_help->setIcon(QIcon(":/icon/m_icon_help.png"));
+
     QAction *m_exit = new QAction(tr("Exit"), this);
     m_exit->setShortcut(tr("Ctrl+Q"));
     m_exit->setIcon(QIcon(":/icon/m_icon_exit.png"));
 
     connect(m_load, SIGNAL(triggered()), this, SLOT(action_open()));
     connect(m_save, SIGNAL(triggered()), this, SLOT(action_save()));
+    connect(m_help, SIGNAL(triggered()), this, SLOT(action_help()));
     connect(m_exit, SIGNAL(triggered()), this, SLOT(action_exit()));
 
     MainMenu->addAction(m_load);
     MainMenu->addAction(m_save);
-
+    MainMenu->addAction(m_help);
     MainMenu->addSeparator();
 
     MainMenu->addAction(m_exit);

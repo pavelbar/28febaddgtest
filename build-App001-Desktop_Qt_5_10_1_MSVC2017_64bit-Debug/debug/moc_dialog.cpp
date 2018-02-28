@@ -21,8 +21,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_Dialog_t {
-    QByteArrayData data[14];
-    char stringdata0[139];
+    QByteArrayData data[15];
+    char stringdata0[151];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -37,20 +37,22 @@ QT_MOC_LITERAL(2, 28, 0), // ""
 QT_MOC_LITERAL(3, 29, 4), // "date"
 QT_MOC_LITERAL(4, 34, 11), // "s_WriteNote"
 QT_MOC_LITERAL(5, 46, 14), // "timerOperation"
-QT_MOC_LITERAL(6, 61, 11), // "action_open"
-QT_MOC_LITERAL(7, 73, 11), // "action_save"
-QT_MOC_LITERAL(8, 85, 8), // "s_AddRow"
-QT_MOC_LITERAL(9, 94, 8), // "s_DelRow"
-QT_MOC_LITERAL(10, 103, 3), // "row"
-QT_MOC_LITERAL(11, 107, 3), // "col"
-QT_MOC_LITERAL(12, 111, 11), // "action_exit"
-QT_MOC_LITERAL(13, 123, 15) // "slotShortcutF11"
+QT_MOC_LITERAL(6, 61, 11), // "action_help"
+QT_MOC_LITERAL(7, 73, 11), // "action_open"
+QT_MOC_LITERAL(8, 85, 11), // "action_save"
+QT_MOC_LITERAL(9, 97, 8), // "s_AddRow"
+QT_MOC_LITERAL(10, 106, 8), // "s_DelRow"
+QT_MOC_LITERAL(11, 115, 3), // "row"
+QT_MOC_LITERAL(12, 119, 3), // "col"
+QT_MOC_LITERAL(13, 123, 11), // "action_exit"
+QT_MOC_LITERAL(14, 135, 15) // "slotShortcutF11"
 
     },
     "Dialog\0slot_on_date_clicked\0\0date\0"
-    "s_WriteNote\0timerOperation\0action_open\0"
-    "action_save\0s_AddRow\0s_DelRow\0row\0col\0"
-    "action_exit\0slotShortcutF11"
+    "s_WriteNote\0timerOperation\0action_help\0"
+    "action_open\0action_save\0s_AddRow\0"
+    "s_DelRow\0row\0col\0action_exit\0"
+    "slotShortcutF11"
 };
 #undef QT_MOC_LITERAL
 
@@ -60,7 +62,7 @@ static const uint qt_meta_data_Dialog[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-       9,   14, // methods
+      10,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -68,15 +70,16 @@ static const uint qt_meta_data_Dialog[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags
-       1,    1,   59,    2, 0x08 /* Private */,
-       4,    0,   62,    2, 0x08 /* Private */,
-       5,    0,   63,    2, 0x08 /* Private */,
-       6,    0,   64,    2, 0x08 /* Private */,
-       7,    0,   65,    2, 0x08 /* Private */,
-       8,    0,   66,    2, 0x08 /* Private */,
-       9,    2,   67,    2, 0x08 /* Private */,
-      12,    0,   72,    2, 0x08 /* Private */,
-      13,    0,   73,    2, 0x08 /* Private */,
+       1,    1,   64,    2, 0x08 /* Private */,
+       4,    0,   67,    2, 0x08 /* Private */,
+       5,    0,   68,    2, 0x08 /* Private */,
+       6,    0,   69,    2, 0x08 /* Private */,
+       7,    0,   70,    2, 0x08 /* Private */,
+       8,    0,   71,    2, 0x08 /* Private */,
+       9,    0,   72,    2, 0x08 /* Private */,
+      10,    2,   73,    2, 0x08 /* Private */,
+      13,    0,   78,    2, 0x08 /* Private */,
+      14,    0,   79,    2, 0x08 /* Private */,
 
  // slots: parameters
     QMetaType::Void, QMetaType::QDate,    3,
@@ -84,8 +87,9 @@ static const uint qt_meta_data_Dialog[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
+    QMetaType::Void,
     QMetaType::Bool,
-    QMetaType::Void, QMetaType::Int, QMetaType::Int,   10,   11,
+    QMetaType::Void, QMetaType::Int, QMetaType::Int,   11,   12,
     QMetaType::Void,
     QMetaType::Void,
 
@@ -102,13 +106,14 @@ void Dialog::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void
         case 1: { bool _r = _t->s_WriteNote();
             if (_a[0]) *reinterpret_cast< bool*>(_a[0]) = std::move(_r); }  break;
         case 2: _t->timerOperation(); break;
-        case 3: _t->action_open(); break;
-        case 4: _t->action_save(); break;
-        case 5: { bool _r = _t->s_AddRow();
+        case 3: _t->action_help(); break;
+        case 4: _t->action_open(); break;
+        case 5: _t->action_save(); break;
+        case 6: { bool _r = _t->s_AddRow();
             if (_a[0]) *reinterpret_cast< bool*>(_a[0]) = std::move(_r); }  break;
-        case 6: _t->s_DelRow((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
-        case 7: _t->action_exit(); break;
-        case 8: _t->slotShortcutF11(); break;
+        case 7: _t->s_DelRow((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
+        case 8: _t->action_exit(); break;
+        case 9: _t->slotShortcutF11(); break;
         default: ;
         }
     }
@@ -139,13 +144,13 @@ int Dialog::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 9)
+        if (_id < 10)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 9;
+        _id -= 10;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 9)
+        if (_id < 10)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 9;
+        _id -= 10;
     }
     return _id;
 }
