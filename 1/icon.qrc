@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>icon/app_icon.png</file>
+        <file>icon/m_icon_exit.png</file>
+        <file>icon/m_icon_load.png</file>
+        <file>icon/m_icon_save.png</file>
+    </qresource>
+</RCC>
