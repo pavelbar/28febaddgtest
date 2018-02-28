@@ -50,7 +50,9 @@ private:
     QTableWidget *tableWidget;
     QCalendarWidget *calendar;
     QTimer *tmr;
+    QString timerTime;
     QString timerstr;
+    bool usetimer = false;
 
     void createMenu();
     void createGridGroupBox();

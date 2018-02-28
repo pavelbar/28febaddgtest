@@ -167,11 +167,11 @@ bool Dialog::open(int val)// 0 - авто
     QTextStream in(&file);        // Создаем потоковый объект типа QDadaStream, так же в данный поток мы передаем объект типа QFile file.
     in.setCodec("UTF-8");
     QString str;
+    звено TMPзвено;
+    QString strtmp;
 
     while (!in.atEnd())
     {
-        звено TMPзвено;
-
         str = file.readLine();
         str = str.simplified();
         TMPзвено.row = str.toInt();
@@ -191,7 +191,19 @@ bool Dialog::open(int val)// 0 - авто
             {
                 str = file.readLine();
                 str = str.simplified();
+                strtmp = str;
                 TMPзвено.column1.InSertLast(str.simplified());
+                if ( (str ==  "1") && (usetimer == true))
+                {
+                     QMessageBox::warning(this, tr("Error"),tr("Ошибка в фале с данными. Программа будет экстрено завершена"));
+                     close();
+                }
+                if (str ==  "1")
+                {
+                    usetimer = true;
+                    timerTime = str;
+                }
+
             }
 
             if (tmp == 1)
@@ -199,6 +211,12 @@ bool Dialog::open(int val)// 0 - авто
                 str = file.readLine();
                 str = str.simplified();
                 TMPзвено.column2.InSertLast(str.simplified());
+                if (strtmp == "1")
+                {
+                    timerstr = str;
+                    findTimer();
+                }
+
             }
 
             if (tmp ==2)
@@ -421,6 +439,27 @@ bool  Dialog::s_WriteNote()
             return false;
         }
 
+    int TMPcount = 0;
+    int TMPindex = -1;
+    for (int row = 0; row < tableWidget->rowCount(); ++row)
+        if (tableWidget->item(row, 0)->text().simplified() == "1")
+        {
+            TMPcount ++;
+            TMPindex = row;
+        }
+    if (TMPcount > 1)
+        {
+            QMessageBox::warning(this, tr("Error"),tr("Можно установить только одно напоминание. Изменение невозможно"));
+            return false;
+        }
+    if ((TMPcount == 1) && (usetimer == false))
+    {
+        usetimer = true;
+        timerstr = tableWidget->item(TMPindex, 2)->text().simplified();
+        timerTime = tableWidget->item(TMPindex, 1)->text().simplified();
+        findTimer();
+    }
+
         for (int i = 0; i < mainList.GetSize(); i++)
         {
             TMPзвено = mainList.GetElem(i);
@@ -456,7 +495,6 @@ bool  Dialog::s_WriteNote()
             }
         }
                 mainList.SetElem(index, TMPзвено);
-    findTimer();
     return true;
 }
 
@@ -523,115 +561,17 @@ void Dialog::paintCell(int flag, QDate Date)
 
 bool Dialog::findTimer()
 {
-    if (mainList.GetSize() == 0)
-        return false;
-
-    if (timerstr.isNull() == false)
-    {
-        //QMessageBox::warning(this, tr("Error"),tr("Запрешено устанавливать два уведомления одновременно. Подождеите %1 минут").arg(QString::number(0.00001666*tmr->remainingTime())));
-        return false;
-    }
-
-    QTime minTime;
+    QTime useTime = QTime::fromString(timerTime,"hh-mm-ss");
     QTime curTime = QTime::currentTime();
 
-    //QMessageBox::warning(this, tr("тек время"),tr("тек время %1").arg(QTime::currentTime().toString()));
-    //QMessageBox::warning(this, tr("тек дата"),tr("тек дата %1").arg(QDate::currentDate().toString()));
-
-    звено TMPзвено;
-    bool flagActiv = false;
-    bool flagTime = false;
-/*
-    for (int index = 0; index < mainList.GetSize(); index++)
-    {
-        TMPзвено = mainList.GetElem(index);
-        flagActiv = false;
-
-        if (TMPзвено.date == QDate::currentDate())
-            for (int row = 0; row <  TMPзвено.row; ++row)
-            {
-                for (int column = 0; column < COUNT_COLUMN; ++column)
-                {
-                    if (column == 0)
-                    {
-                        QString str = TMPзвено.column1.GetElem(row);
-                        str = str.simplified();
-                        if (str[0] == '1')
-                            flagActiv = true;
-                    }
-
-                    if (column == 1)
-                    {
-                        if ( (flagActiv == true) && (QTime::fromString(TMPзвено.column2.GetElem(row).simplified(),"hh-mm-ss") > curTime) )
-                            minTime = QTime::fromString(TMPзвено.column2.GetElem(row).simplified(),"hh-mm-ss");
-                    }
-                }
-            }
-    }
-    */
-    //-----
-/*
-    if (minTime.isNull())
-    {
-        QMessageBox::warning(this, tr("er"),tr("дата не нашлась").arg(""));
+    if (useTime <= curTime)
         return false;
-    }
-    */
 
-    //--------------------
-
-    for (int index = 0; index < mainList.GetSize(); index++)
-    {
-        TMPзвено = mainList.GetElem(index);
-        flagActiv = false;
-        flagTime = false;
-
-        if (TMPзвено.date == QDate::currentDate())
-            for (int row = 0; row <  TMPзвено.row; ++row)
-            {
-                for (int column = 0; column < COUNT_COLUMN; ++column)
-                {
-                    if (column == 0)
-                    {
-                        QString str = TMPзвено.column1.GetElem(row);
-                        str = str.simplified();
-                        if (str[0] == '1')
-                            flagActiv = true;
-                    }
-
-                    if (column == 1)
-                    {
-                       // if ( (flagActiv == true) && (QTime::fromString(TMPзвено.column2.GetElem(row).simplified(),"hh-mm-ss") < minTime) && (QTime::fromString(TMPзвено.column2.GetElem(row).simplified(),"hh-mm-ss") > curTime) )
-                        if ( (flagActiv == true) && (QTime::fromString(TMPзвено.column2.GetElem(row).simplified(),"hh-mm-ss") > curTime) )
-                        minTime = QTime::fromString(TMPзвено.column2.GetElem(row).simplified(),"hh-mm-ss");
-                        flagTime = true;
-
-                    }
-
-                    if (column == 2)
-                    {
-                        if ((flagActiv == true) && (flagTime == true))
-                            timerstr = TMPзвено.column3.GetElem(row);
-                        timerstr = timerstr.simplified();
-                    }
-                }
-            }
-
-    }
-
-    if (minTime.isNull())
-    {
-        //QMessageBox::warning(this, tr("er"),tr("дата не нашлась").arg(""));
-        return false;
-    }
-
-    if ((flagActiv == true) && (flagTime == true) && (minTime.isNull() == false))
-    {
         long int timeMS = -1;
 
-        int i_result_hour = minTime.hour() - curTime.hour();
-        int i_result_minute = minTime.minute() - curTime.minute();
-        int i_result_seconds = minTime.second() - curTime.second();
+        int i_result_hour = useTime.hour() - curTime.hour();
+        int i_result_minute = useTime.minute() - curTime.minute();
+        int i_result_seconds = useTime.second() - curTime.second();
 
         timeMS = 3600000*i_result_hour + 60000*i_result_minute + 1000*i_result_seconds;
         QMessageBox::warning(this, tr("Предупреждение"),tr("О деле <%1> будет напомненно через %2 минут").arg(timerstr).arg(QString::number(double(timeMS)*0.00001666)));
@@ -641,9 +581,6 @@ bool Dialog::findTimer()
         connect(tmr, SIGNAL(timeout()), this, SLOT(timerOperation())); // Подключаем сигнал таймера к слоту
         tmr->start(); // Запускаем таймер
         return true;
-    }
-    else
-        return false;
 }
 //---------------------------------------------------------------------------------------------------------------------------
 
@@ -655,7 +592,7 @@ void Dialog::timerOperation()
 {
     QMessageBox::warning(this, tr("Напоминание"),tr("%1").arg(timerstr));
     delete tmr;
-    timerstr.clear();
+    usetimer = false;
 }
 
 //---------------------------------------------------------------------------------------------------------------------------
